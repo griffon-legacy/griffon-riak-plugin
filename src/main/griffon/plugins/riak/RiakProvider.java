@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
+package griffon.plugins.riak;
+
+import groovy.lang.Closure;
+import griffon.util.CallableWithArgs;
+
 /**
  * @author Andres Almiray
  */
+public interface RiakProvider {
+    Object withRiak(Closure closure);
 
-def eventClosure1 = binding.variables.containsKey('eventSetClasspath') ? eventSetClasspath : {cl->}
-eventSetClasspath = { cl ->
-    eventClosure1(cl)
-    if(compilingPlugin('riak')) return
-    griffonSettings.dependencyManager.flatDirResolver name: 'griffon-riak-plugin', dirs: "${riakPluginDir}/addon"
-    griffonSettings.dependencyManager.addPluginDependency('riak', [
-        conf: 'compile',
-        name: 'griffon-riak-addon',
-        group: 'org.codehaus.griffon.plugins',
-        version: riakPluginVersion
-    ])
+    Object withRiak(String clientName, Closure closure);
+
+    <T> T withRiak(CallableWithArgs<T> callable);
+
+    <T> T withRiak(String clientName, CallableWithArgs<T> callable);
 }

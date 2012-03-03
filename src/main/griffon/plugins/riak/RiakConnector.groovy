@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package griffon.plugins.riak
 
 import com.basho.riak.client.RiakClient
@@ -30,25 +31,10 @@ import org.slf4j.LoggerFactory
  * @author Andres Almiray
  */
 @Singleton
-final class RiakConnector {
+final class RiakConnector implements RiakProvider {
     private bootstrap
 
     private static final Logger LOG = LoggerFactory.getLogger(RiakConnector)
-
-    static void enhance(MetaClass mc) {
-        mc.withRiak = {Closure closure ->
-            RiakClientHolder.instance.withRiak('default', closure)
-        }
-        mc.withRiak << {String clientName, Closure closure ->
-            RiakClientHolder.instance.withRiak(clientName, closure)
-        }
-        mc.withRiak << {CallableWithArgs callable ->
-            RiakClientHolder.instance.withRiak('default', callable)
-        }
-        mc.withRiak << {String clientName, CallableWithArgs callable ->
-            RiakClientHolder.instance.withRiak(clientName, callable)
-        }
-    }
 
     Object withRiak(String clientName = 'default', Closure closure) {
         RiakClientHolder.instance.withRiak(clientName, closure)
