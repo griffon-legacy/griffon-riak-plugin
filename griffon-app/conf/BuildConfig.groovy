@@ -6,7 +6,7 @@ griffon.project.dependency.resolution = {
         mavenCentral()
     }
     dependencies {
-        compile 'com.basho.riak:riak-client:1.0.4'
+        compile 'com.basho.riak:riak-client:1.0.5'
     }
 }
 

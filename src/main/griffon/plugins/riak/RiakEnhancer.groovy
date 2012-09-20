@@ -27,7 +27,7 @@ final class RiakEnhancer {
     private static final Logger LOG = LoggerFactory.getLogger(RiakEnhancer)
 
     private RiakEnhancer() {}
-    
+
     static void enhance(MetaClass mc, RiakProvider provider = RiakClientHolder.instance) {
         if(LOG.debugEnabled) LOG.debug("Enhancing $mc with $provider")
         mc.withRiak = {Closure closure ->

@@ -23,6 +23,7 @@ import griffon.core.GriffonApplication
 import griffon.util.Environment
 import griffon.util.Metadata
 import griffon.util.CallableWithArgs
+import griffon.util.ConfigUtils
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -47,8 +48,7 @@ final class RiakConnector implements RiakProvider {
     // ======================================================
 
     ConfigObject createConfig(GriffonApplication app) {
-        def clientClass = app.class.classLoader.loadClass('RiakConfig')
-        new ConfigSlurper(Environment.current.name).parse(clientClass)
+        ConfigUtils.loadConfigWithI18n('RiakConfig')
     }
 
     private ConfigObject narrowConfig(ConfigObject config, String clientName) {

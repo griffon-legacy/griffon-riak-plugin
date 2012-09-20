@@ -37,7 +37,7 @@ class RiakGriffonAddon {
         }
     }
 
-    def events = [
+    Map events = [
         ShutdownStart: { app ->
             ConfigObject config = RiakConnector.instance.createConfig(app)
             RiakConnector.instance.disconnect(app, config)

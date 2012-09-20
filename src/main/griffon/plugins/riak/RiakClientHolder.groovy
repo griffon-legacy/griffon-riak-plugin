@@ -34,7 +34,7 @@ class RiakClientHolder implements RiakProvider {
     private static final Logger LOG = LoggerFactory.getLogger(RiakClientHolder)
     private static final Object[] LOCK = new Object[0]
     private final Map<String, RiakClient> clients = [:]
-  
+
     String[] getClientNames() {
         List<String> clientNames = new ArrayList().addAll(clients.keySet())
         clientNames.toArray(new String[clientNames.size()])
@@ -47,7 +47,7 @@ class RiakClientHolder implements RiakProvider {
 
     void setClient(String clientName = 'default', RiakClient client) {
         if(isBlank(clientName)) clientName = 'default'
-        storeClient(clientName, client)       
+        storeClient(clientName, client)
     }
 
     Object withRiak(String clientName = 'default', Closure closure) {
@@ -70,7 +70,7 @@ class RiakClientHolder implements RiakProvider {
     
     void disconnectClient(String clientName) {
         if(isBlank(clientName)) clientName = 'default'
-        storeClient(clientName, null)        
+        storeClient(clientName, null)
     }
 
     private RiakClient fetchClient(String clientName) {
@@ -81,7 +81,7 @@ class RiakClientHolder implements RiakProvider {
             ConfigObject config = RiakConnector.instance.createConfig(app)
             client = RiakConnector.instance.connect(app, config, clientName)
         }
-        
+
         if(client == null) {
             throw new IllegalArgumentException("No such RiakClient configuration for name $clientName")
         }
